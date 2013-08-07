@@ -1,5 +1,5 @@
 MH <-
-function(poster, ped, covars, traits, nmc, burnin, thin, blocks=NA, priors=NA, tmp=NA, alt=F){
+function(poster, ped, covars, traits, nmc, burnin, thin, blocks=NA, priors=NA, tmp=NA, binary=NA, alt=F){
 
 	# Dependencies
 	library(corpcor)
@@ -97,6 +97,12 @@ function(poster, ped, covars, traits, nmc, burnin, thin, blocks=NA, priors=NA, t
 	if( alt ){ W <- calc.W(ped, X, traits, THP) }
 	else{ W <- calc.W.alt(wpop, X, traits, THP) }
 	if( length(cens)>0 ){ W <- W[-cens,] }			
+
+	# Treating non-normal variables
+	if( !is.na(binary) ){
+		y_ <- y
+		y <- update.y(y_, NA, g, W, Sig, binary, ntr, first=T)
+		}
 	
 	# Densities
 	like <- likelihood(y, g, W, cSig, sparse)
@@ -130,6 +136,12 @@ function(poster, ped, covars, traits, nmc, burnin, thin, blocks=NA, priors=NA, t
 		try(g <- update.g(W, cSig, V, y, sparse, priors), silent=T) # numerical singularity causes fail
 		like <- likelihood(y, g, W, cSig, sparse)
 		prig <- pri.g(g, THP, G, sparse, priors)
+
+		# Updating latent liabilities, if any
+		if( !is.na(binary) ){ 
+      y <- update.y(y_, y, g, W, Sig, binary, ntr, first=F) 
+      like <- likelihood(y, g, W, cSig, sparse)
+      }
 
 		# Updating G, random walk
 		newG <- G

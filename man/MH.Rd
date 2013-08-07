@@ -9,7 +9,7 @@ This function fits the animal model described by Ovaskainen et al. while samplin
 }
 \usage{
 MH(poster, ped, covars, traits, nmc, burnin, thin,
-blocks = NA, priors = NA, tmp = NA, alt = F)
+blocks = NA, priors = NA, tmp = NA, binary = NA, alt = F)
 }
 
 \arguments{
@@ -17,7 +17,7 @@ blocks = NA, priors = NA, tmp = NA, alt = F)
 posterior of AFM, a 3-dimensional array, see Details
 }
   \item{ped}{
-pedigree matrix
+pedigree matrix (NOTE that these have to be R matrices, not e.g. data frames)
 }
   \item{covars}{
 covariates modelled as fixed effects, matrix
@@ -43,6 +43,9 @@ list of prior hyper-parameters, optional
   \item{tmp}{
 tmpmax for sparse Cholesky decomposition, optional
 }
+  \item{binary}{
+which traits are binary?
+}
   \item{alt}{
 is pedigree in alternative short format (as in specimen2)?
 }
@@ -51,6 +54,8 @@ is pedigree in alternative short format (as in specimen2)?
 Use the R package RAFM to analyze molecular markers, calculate posterior of theta, and use it as argument poster in this function. Use MH to analyze the phenotypic data. Please see specimen and specimen2 for formatting your data for use with this package. The observations have to be in the same order for every argument of MH. Blocks do not need to be coded as dummys (whereas categorical variables in covars need to be). Note that the arguments of MH are matrices or arrays.
 
 If you do not wish to give any covariates, assign covars <- traits[,1] (which is ID). In this case, each trait is modelled by a constant term. In fact, a constant term is always used regardless of the covariates, corresponding to traits~covars+1 in standard regression models. It is the first 'fixed effect' in the output.
+
+If you have binary data, code them as 0 and 1, and mention these traits in binary. If binary=NA, all data are assumed normally distributed within populations.
 
 As regarding the priors, format the list according to specimen$priors. You can also use \cr priors$fixed[[2]]=NA, unlike in specimen. This produces the model described by Ovaskainen et al., whereas typing a covariance matrix removes the link between the population means and the ancestral G matrix, potentially confusing the neutrality test. Use priors=NA, if you don't know what to do. The default prirors are quite uninformative.  
 
@@ -89,4 +94,9 @@ mains <- samp$main.result # DO THIS, IF YOU USE RANDOM EFFECTS
 mains$G
 plot(mains$pop.ef[1,1,], type='l', xlab="iter", ylab="", main="") # one Markov chain
 plot(mains$G[1,2,], type='l', xlab="iter", ylab="", main="") # another Markov chain
+
+# Coding trait 2 as binary and re-running the analysis:
+A$traits[,3] = 1*(A$traits[,3]>0) # e.g. positive attitude
+samp <- MH(A$poster, A$ped, A$covars, A$traits, 2, 1, 1, binary=2)
+ 
 }

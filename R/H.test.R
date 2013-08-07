@@ -5,6 +5,7 @@ function(popefpost, Gpost, THpost, env, silent=T){
 	nx = dim(popefpost)[1] * dim(popefpost)[2]
 	npop = dim(THpost)[1]
 	nmc = dim(THpost)[3]
+  env = env[,-1] # removing ids
 	env = into.dist(env)
 
 	# Posterior of Mantel statistic for phenotypic distance
@@ -21,7 +22,6 @@ function(popefpost, Gpost, THpost, env, silent=T){
 	
 	# Out	
 	if( !silent ){
-  	windows()
   	par(mfcol=c(1,2))
   	plot(mobs, type='l', ylab="observed product moment", xlab="iteration", main="Convergence check")
   	plot(mrand, type='l', ylab="product moment from neutral model", xlab="iteration", main="Convergence check")

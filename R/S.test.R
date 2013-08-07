@@ -35,7 +35,6 @@ function(popefpost, Gpost, THpost, silent=T, G.off=F, th.off=F, main=NA){
 	cdf = pchisq(D, dfr)
 	out = mean(cdf)
 	if( !silent ){
-		windows()
 		if( is.na(main) ){ main = "Posterior trace" }
 		plot(cdf, xlab="iteration", ylab="signal of selection (S)", main=main, type='l', lwd=2, ylim=c(0,1))
 		lines(c(-length(cdf),2*length(cdf)), rep(0.2,2), lty='dashed')

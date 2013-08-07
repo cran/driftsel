@@ -1,1 +1,1 @@
-export(MH, neut.test, viz.traits, viz.theta)
+export(MH, neut.test, viz.traits, viz.theta, S.test, H.test)
