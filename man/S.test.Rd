@@ -50,7 +50,7 @@ Karhunen et al. (2013): driftsel: an R package for detecting signals of natural 
 \examples{
 data(specimen)
 A <- specimen
-samp <- MH(A$poster, A$ped, A$covars, A$traits, 99, 66, 3) # a small posterior
+samp <- MH(A$poster, A$ped, A$covars, A$traits, 21, 7, 2) # a small posterior
 S <- S.test(samp$pop.ef, samp$G, samp$theta) # neutrality test
 S <- S.test(samp$pop.ef, samp$G, samp$theta, G.off=TRUE) # does the value change?
 }

@@ -38,6 +38,6 @@ n = nrow(specimen2$ped)
 
 # Running MH:
 A <- specimen2
-samp <- MH(A$poster, A$ped, A$covars, A$traits, 2, 1, 1, alt=TRUE)
+samp <- MH(A$poster, A$ped, A$covars, A$traits, 21, 7, 2, alt=TRUE)
 }
 \keyword{datasets}

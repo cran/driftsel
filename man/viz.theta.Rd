@@ -42,7 +42,7 @@ Does not return anything.
 \examples{
 data(specimen)
 A <- specimen
-samp <- MH(A$poster, A$ped, A$covars, A$traits, 99, 66, 3)
+samp <- MH(A$poster, A$ped, A$covars, A$traits, 21, 7, 2)
 viz.theta(A$poster) # based only on molecular markers
 viz.theta(samp$theta) # based on molecular markers & phenotypes
 }

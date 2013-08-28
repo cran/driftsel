@@ -46,7 +46,7 @@ Karhunen et al. (2013b): Evolution of quantitative traits by natural selection: 
 # Analayzing specimen data by MCMC:
 data(specimen)
 A <- specimen
-samp <- MH(A$poster, A$ped, A$covars, A$traits, 21, 7, 2) # a very small posterior
+samp <- MH(A$poster, A$ped, A$covars, A$traits, 21, 7, 2) # a small posterior
 
 # Let's make some environmental data!
 dim(A$poster) # how many populations?

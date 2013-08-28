@@ -95,8 +95,13 @@ mains$G
 plot(mains$pop.ef[1,1,], type='l', xlab="iter", ylab="", main="") # one Markov chain
 plot(mains$G[1,2,], type='l', xlab="iter", ylab="", main="") # another Markov chain
 
+# Panmictic population:
+nostruc <- 0*A$poster
+samp <- MH(nostruc, A$ped, A$covars, A$traits, 2, 1, 1)
+
 # Coding trait 2 as binary and re-running the analysis:
 A$traits[,3] = 1*(A$traits[,3]>0) # e.g. positive attitude
 samp <- MH(A$poster, A$ped, A$covars, A$traits, 2, 1, 1, binary=2)
+
  
 }

@@ -2,9 +2,9 @@ MH <-
 function(poster, ped, covars, traits, nmc, burnin, thin, blocks=NA, priors=NA, tmp=NA, binary=NA, alt=F){
 
 	# Dependencies
-	library(corpcor)
-	library(MCMCpack)
-	library(SparseM)
+	# library(corpcor)
+	# library(MCMCpack)
+	# library(SparseM)
 
 	# Automate conversion
 	ped <- as.matrix(ped)
@@ -23,9 +23,15 @@ function(poster, ped, covars, traits, nmc, burnin, thin, blocks=NA, priors=NA, t
 	else{ sparse <- F }
 	
 	# Coancestry matrix & the other 'Kroenecker matrix'
+	nop <- dim(poster)[1]
+	if( max(poster)==0 ){ # Bayes spirit
+    		for( i in 1:(dim(poster)[3]) ){
+      			poster[,,i] <- 10^(-4)*diag(nop)
+      			}
+    		}
 	w <- sample(1:(dim(poster)[3]), 1)
 	ww <- w
-	THP <- poster[,,w]
+	THP <- as.matrix(poster[,,w])
 	if( alt ){ # one generation
 		ped <- ped[,-1]
 		censped <- apply(ped, 1, function(x)length(which(is.na(x))))		
@@ -92,7 +98,7 @@ function(poster, ped, covars, traits, nmc, burnin, thin, blocks=NA, priors=NA, t
 		}
 		
 	# Design matrices
-	g <- rnorm(ncol(traits)*(ncol(THP)+ncol(X)), 0, 1)
+	g <- rnorm(ncol(traits)*(ncol(THP)+ncol(X)), 0, sqrt(max(poster)))
 	V <- calc.V(g, THP, G, priors)
 	if( alt ){ W <- calc.W(ped, X, traits, THP) }
 	else{ W <- calc.W.alt(wpop, X, traits, THP) }
@@ -204,7 +210,7 @@ function(poster, ped, covars, traits, nmc, burnin, thin, blocks=NA, priors=NA, t
 			k <- sample(1:(dim(poster)[3]), 1, prob=props)
 			}
 		else{ k <- sample(1:(dim(poster)[3]), 1) }
-		newTHP <- poster[,,k]
+		newTHP <- as.matrix(poster[,,k])
 		if( alt ){ newM <- calc.M(ped, newTHP, THB, censped) }
 		else{ newM <- calc.M.alt(wpop, newTHP, ped) }
 		if( sparse ){ newM <- as.matrix.csr(newM) }

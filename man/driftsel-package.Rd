@@ -5,13 +5,13 @@
 \title{
 Drift and selection in natural populations
 }
-\description{ This package implements the neutrality test described in the Genetics paper of Ovaskainen et al. (2011), and explained in more detail by Karhunen et al. (2013). Shortly, it fits a Bayesian animal model and compares it with a measure of neutral genetic differentiation. (This measure can be obtained by using the R package RAFM.) Alternatively, driftsel can also be used to estimate G matrices and effects of covariates on phenotypes in a panmictic population. The package includes the estimation method MH, the neutrality test, visualization aids and example datasets.
+\description{ This package implements the neutrality test described in the Genetics paper of Ovaskainen et al. (2011), and explained in more detail by Karhunen et al. (2013). Shortly, it fits a Bayesian animal model and compares it with a measure of neutral genetic differentiation. (This measure can be obtained by using the R package RAFM.) Alternatively, driftsel can also be used to estimate G matrices and effects of covariates on phenotypes in a panmictic population. The package includes the estimation method MH, the neutrality test, visualization aids and example datasets. Versions 2.0+ involve binary traits and the so-called H test. Versions 2.1+ improve mixing for G matrix estimation.
 }
 \details{
 \tabular{ll}{
 Package: \tab driftsel\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
+Version: \tab 2.1.1\cr
 Date: \tab 2012-10-02\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr
